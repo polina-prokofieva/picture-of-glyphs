@@ -23,7 +23,7 @@ const getGlyph = v => {
   }
 
   return random.pick(glyphs); 
-}
+};
 
 const generateCanvasForParseImage = ({ width, height, cell }) => {
   const imgCanvas = document.createElement('canvas');
@@ -43,6 +43,25 @@ const generateCanvasForParseImage = ({ width, height, cell }) => {
   const imgData = imgContext.getImageData(0, 0, cols, rows).data;
 
   return { imgData, cols, numCells };
-}
+};
 
-module.exports = { loadImage, getGlyph, generateCanvasForParseImage };
+const getRGBA = (data, index) => ({
+  r: data[index * 4],
+  g: data[index * 4 + 1],
+  b: data[index * 4 + 2],
+  a: data[index * 4 + 3]
+});
+
+const getColorString = (data, index) => {
+  const { r, g, b, a } = getRGBA(data, index);
+
+  return `rgba(${r}, ${g}, ${b}, ${a})`;
+};
+
+module.exports = {
+  loadImage,
+  getGlyph,
+  generateCanvasForParseImage,
+  getRGBA,
+  getColorString
+};

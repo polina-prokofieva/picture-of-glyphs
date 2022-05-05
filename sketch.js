@@ -1,6 +1,6 @@
 const { getGlyph } = require('./utils');
 const { image } = require('./image');
-const { generateCanvasForParseImage } = require('./utils');
+const { generateCanvasForParseImage, getRGBA } = require('./utils');
 const { params } = require('./pane');
 
 const sketch = () => { 
@@ -22,11 +22,7 @@ const sketch = () => {
       const x = col * cell;
       const y = row * cell;
 
-      const r = imgData[i * 4];
-      const g = imgData[i * 4 + 1];
-      const b = imgData[i * 4 + 2];
-      const a = imgData[i * 4 + 3];
-
+      const { r, g, b, a } = getRGBA(imgData, i);
       const glyph = getGlyph(r);
 
       ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a})`;
@@ -39,8 +35,8 @@ const sketch = () => {
       if(Math.random() < 0.1) {
         ctx.font = `${cell * Math.random() * 10}px serif`;
       }
-      ctx.fillText(glyph, 0, 0);
 
+      ctx.fillText(glyph, 0, 0);
       ctx.restore();
     }
   };

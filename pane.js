@@ -5,7 +5,7 @@ const params = {
   picture: true
 };
 
-const createPane = (manager) => {
+const createPane = manager => {
   const pane = new Tweakpane.Pane();
   let folder;
 
@@ -13,8 +13,7 @@ const createPane = (manager) => {
   folder.addInput(params, 'cell', { min: 2, max: 50, step: 4 });
   folder.addInput(params, 'picture');
 
-  pane.on('change', (evt) => {
-    console.log('evt', evt);
+  pane.on('change', () => {
     manager && manager.render();
   });
 }
