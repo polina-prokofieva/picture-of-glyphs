@@ -1,5 +1,7 @@
 const random = require('canvas-sketch-util/random');
 const { image } = require('./image');
+const { lightestColor } = require('./constants');
+const { params } = require('./pane');
 
 const loadImage = path => {
   return new Promise((resolve, reject) => {
@@ -11,18 +13,13 @@ const loadImage = path => {
 };
 
 const getGlyph = v => {
-  let glyphs;
+  const part = params.wordAmout;
+  const { words, symbols } = params;
+  const wordsArr = words.replace(/\s/g, '').split(',');
+  const symbolsArr = symbols.split('');
 
-  if (v < 10) return '';
-  if (v < 100) return '#';
-  if (v < 150) return '/';
-  if (v < 200) {
-    glyphs = ['Spring', 'green', 'May', 'April', '@']
-  } else {
-    glyphs = ['#', '@', 'A'];
-  }
-
-  return random.pick(glyphs); 
+  if (v < lightestColor * part) return random.pick(wordsArr);
+  return random.pick(symbolsArr); 
 };
 
 const generateCanvasForParseImage = ({ width, height, cell }) => {

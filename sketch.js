@@ -6,13 +6,18 @@ const { params } = require('./pane');
 const sketch = () => { 
   return ({ context: ctx, width, height }) => {
     const { cell, picture } = params;
-    const { imgData, cols, numCells } = generateCanvasForParseImage({ width, height, cell });
+    const {
+      imgData,
+      cols,
+      numCells
+    } = generateCanvasForParseImage({ width, height, cell });
 
     ctx.fillStyle = 'black';
     ctx.fillRect(0, 0, width, height);
 
     if (picture) {
-      image.element && ctx.drawImage(image.element, 0, 0, width, height);
+      image.element &&
+        ctx.drawImage(image.element, 0, 0, width, height);
     }
 
     for(let i = 0; i < numCells; i++) {
@@ -23,7 +28,7 @@ const sketch = () => {
       const y = row * cell;
 
       const { r, g, b, a } = getRGBA(imgData, i);
-      const glyph = getGlyph(r);
+      const glyph = getGlyph(r + g + b);
 
       ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a})`;
 
