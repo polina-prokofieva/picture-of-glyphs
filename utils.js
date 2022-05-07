@@ -13,13 +13,20 @@ const loadImage = path => {
 };
 
 const getGlyph = v => {
-  const part = params.wordAmout;
-  const { words, symbols } = params;
+  const {
+    words,
+    wordsAmout,
+    symbols,
+    symbolsAmount,
+    defaultSymbol } = params;
   const wordsArr = words.replace(/\s/g, '').split(',');
   const symbolsArr = symbols.split('');
 
-  if (v < lightestColor * part) return random.pick(wordsArr);
-  return random.pick(symbolsArr); 
+  if (v < lightestColor * wordsAmout) return random.pick(wordsArr);
+  if (v < lightestColor * wordsAmout + lightestColor * symbolsAmount)
+    return random.pick(symbolsArr);
+
+  return defaultSymbol;
 };
 
 const generateCanvasForParseImage = ({ width, height, cell }) => {
